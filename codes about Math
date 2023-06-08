@@ -1,1 +1,72 @@
+package correlation;
+import java.util.Scanner;
+import java.lang.Math;
+public class coefficent {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Scanner scanner = new Scanner(System.in);
+
+        // Get input for x values
+        System.out.print("Enter the values for x (space-separated): ");
+        String xInput = scanner.nextLine();
+        String[] xValues = xInput.split(" ");
+        double[] xArray = new double[xValues.length];
+        for (int i = 0; i < xValues.length; i++) {
+            xArray[i] = Double.parseDouble(xValues[i]);
+        }
+
+        // Get input for y values
+        System.out.print("Enter the values for y (space-separated): ");
+        String yInput = scanner.nextLine();
+        String[] yValues = yInput.split(" ");
+        double[] yArray = new double[yValues.length];
+        for (int i = 0; i < yValues.length; i++) {
+            yArray[i] = Double.parseDouble(yValues[i]);
+        }
+
+        // Calculate the means of x and y
+        double xMean = calculateMean(xArray);
+        double yMean = calculateMean(yArray);
+
+        // Calculate the Pearson correlation coefficient (r)
+        double r = calculatePearsonCoefficient(xArray, yArray, xMean, yMean);
+
+        // Print the results
+        System.out.println("Mean of x: " + xMean);
+        System.out.println("Mean of y: " + yMean);
+        System.out.println("Pearson correlation coefficient (r): " + r);
+    }
+
+    // Function to calculate the mean of an array
+    public static double calculateMean(double[] values) {
+        double sum = 0;
+        for (double value : values) {
+            sum += value;
+        }
+        return sum / values.length;
+    }
+
+    // Function to calculate the Pearson correlation coefficient (r)
+    public static double calculatePearsonCoefficient(double[] x, double[] y, double xMean, double yMean) {
+        double numerator = 0;
+        double xDenominator = 0;
+        double yDenominator = 0;
+
+        for (int i = 0; i < x.length; i++) {
+            double xDiff = x[i] - xMean;
+            double yDiff = y[i] - yMean;
+
+            numerator += xDiff * yDiff;
+            xDenominator += Math.pow(xDiff, 2);
+            yDenominator += Math.pow(yDiff, 2);
+        }
+
+        double denominator = Math.sqrt(xDenominator * yDenominator);
+        return numerator / denominator;
+
+	}
+
+}
 
