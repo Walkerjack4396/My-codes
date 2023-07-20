@@ -1,1 +1,45 @@
+import java.util.Scanner;
+import java.math.BigInteger;
+public class BinomialCoefficient {
+
+	
+		
+		
+		// Function to calculate factorial of a number
+	 static long binomialCoefficient(int n, int k) {
+	        if (k == 0 || k == n) {
+	            return 1;
+	        }
+	        return binomialCoefficient(n - 1, k - 1) + binomialCoefficient(n - 1, k);
+	    }
+
+	    // Function to calculate P(X = k) for the binomial distribution
+	    static double binomialProbability(int n, int k, double p) {
+	        long coefficient = binomialCoefficient(n, k);
+	        double probabilityOfSuccess = Math.pow(p, k);
+	        double probabilityOfFailure = Math.pow(1 - p, n - k);
+
+	        return coefficient * probabilityOfSuccess * probabilityOfFailure;
+	    }
+
+	    public static void main(String[] args) {
+	        Scanner scanner = new Scanner(System.in);
+
+	        System.out.print("Enter the number of trials (n): ");
+	        int n = scanner.nextInt();
+
+	        System.out.print("Enter the number of successful outcomes (k): ");
+	        int k = scanner.nextInt();
+
+	        System.out.print("Enter the probability of success (p): ");
+	        double p = scanner.nextDouble();
+
+	        double probability = binomialProbability(n, k, p);
+	        System.out.println("P(X = " + k + ") = " + probability);
+
+	        scanner.close();
+
+	}
+
+}
 
