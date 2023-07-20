@@ -1,0 +1,94 @@
+
+import java.util.Scanner;
+import java.math.BigInteger;
+import java.util.*;
+import java.text.DecimalFormat;
+import java.util.List;
+public class BD2 {
+	
+	  private static List<Double> probabilities = new ArrayList<>();
+	  private static DecimalFormat decimalFormat = new DecimalFormat("#.#####");
+
+	
+    // Function to calculate factorial of a number using BigInteger
+    static BigInteger factorial(int n) {
+        if (n == 0 || n == 1) {
+            return BigInteger.ONE;
+        }
+
+        BigInteger result = BigInteger.ONE;
+        for (int i = 2; i <= n; i++) {
+            result = result.multiply(BigInteger.valueOf(i));
+        }
+        return result;
+    }
+
+    // Function to calculate the binomial coefficient using factorial function
+    static BigInteger binomialCoefficient(int n, int k) {
+        if (k == 0 || k == n) {
+            return BigInteger.ONE;
+        }
+        
+        if (k > n - k) {
+            k = n - k; // Optimization to reduce computations
+        }
+
+        BigInteger numerator = factorial(n);
+        BigInteger denominator = factorial(k).multiply(factorial(n - k));
+
+        return numerator.divide(denominator);
+    }
+
+    // Function to calculate P(X = k) for the binomial distribution
+    static double binomialProbability(int n, int k, double p) {
+        BigInteger coefficient = binomialCoefficient(n, k);
+        double probabilityOfSuccess = Math.pow(p, k);
+        double probabilityOfFailure = Math.pow(1 - p, n - k);
+
+        double probability = coefficient.doubleValue() * probabilityOfSuccess * probabilityOfFailure;
+        return Double.parseDouble(decimalFormat.format(probability));
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Choose an option:");
+            System.out.println("1. Calculate P(X = k)");
+            System.out.println("2. Show stored probabilities");
+            System.out.println("3. Calculate the sum of stored probabilities");
+            System.out.println("4. Exit");
+
+            int option = scanner.nextInt();
+
+            if (option == 1) {
+                System.out.print("Enter the number of trials (n): ");
+                int n = scanner.nextInt();
+
+                System.out.print("Enter the number of successful outcomes (k): ");
+                int k = scanner.nextInt();
+
+                System.out.print("Enter the probability of success (p): ");
+                double p = scanner.nextDouble();
+
+                double probability = binomialProbability(n, k, p);
+                probabilities.add(probability);
+                System.out.println("P(X = " + k + ") = " + probability);
+            } else if (option == 2) {
+                System.out.println("Stored probabilities: " + probabilities);
+            } else if (option == 3) {
+                double sum = 0;
+                for (double probability : probabilities) {
+                    sum += probability;
+                }
+                System.out.println("Sum of stored probabilities: " + Double.parseDouble(decimalFormat.format(sum)));
+            } else if (option == 4) {
+                break;
+            } else {
+                System.out.println("Invalid option. Please try again.");
+            }
+        }
+
+        scanner.close();
+    }
+}
