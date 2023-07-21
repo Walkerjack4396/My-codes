@@ -1,0 +1,62 @@
+import java.util.Scanner;
+
+public class test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		//print Z score
+	        Scanner scanner = new Scanner(System.in);
+
+	        System.out.print("Enter the value of X: ");
+	        double x = scanner.nextDouble();
+
+	        System.out.print("Enter the mean (mu): ");
+	        double mean = scanner.nextDouble();
+
+	        System.out.print("Enter the standard deviation (sigma): ");
+	        double stdDeviation = scanner.nextDouble();
+	        
+
+	        double zScore = calculateZScore(x, mean, stdDeviation);
+	        System.out.println("The Z-score for X = " + x + " in the given distribution is: " + zScore);
+	        
+	        double probability = cumulativeNormalDistribution(zScore);
+
+	        System.out.println("Probability (CDF) = " + probability);
+	       
+	        scanner.close();
+	    }
+	//calculate Z score
+
+	    public static double calculateZScore(double x, double mean, double stdDeviation) {
+	        return (x - mean) / stdDeviation;
+	    }
+	    
+	    //cumulativeNormalDistribution
+	    
+	    static double cumulativeNormalDistribution(double zScore) {
+	        return 0.5 * (1 + erf(zScore / Math.sqrt(2)));
+	    }
+	    //error erf
+	    static double erf(double zScore) {
+	        double t = 1.0 / (1.0 + 0.5 * Math.abs(zScore));
+	        double ans = 1 - t * Math.exp(-zScore * zScore - 1.26551223 +
+	                            t * (1.00002368 +
+	                            t * (0.37409196 +
+	                            t * (0.09678418 +
+	                            t * (-0.18628806 +
+	                            t * (0.27886807 +
+	                            t * (-1.13520398 +
+	                            t * (1.48851587 +
+	                            t * (-0.82215223 +
+	                            t * (0.17087277))))))))));
+	        if (zScore >= 0) return ans;
+	        else return -ans;
+	    }
+}
+	  
+	    
+	
+
+	
