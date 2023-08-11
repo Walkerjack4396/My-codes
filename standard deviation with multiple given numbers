@@ -1,0 +1,48 @@
+import java.util.Scanner;
+import java.lang.Math;
+public class iteration {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		 Scanner scanner = new Scanner(System.in);
+
+	        System.out.print("Enter the number of values: ");
+	        int n = scanner.nextInt();
+
+	        double[] values = new double[n];
+
+	        for (int i = 0; i < n; i++) {
+	            System.out.print("Enter value " + (i + 1) + ": ");
+	            values[i] = scanner.nextDouble();
+	        }
+
+	        double mean = calculateMean(values);
+	        double standardDeviation = calculateStandardDeviation(values, mean);
+
+	        System.out.println("Mean: " + mean);
+	        System.out.println("Standard Deviation: " + standardDeviation);
+
+	        scanner.close();
+	    }
+
+	    public static double calculateMean(double[] values) {
+	        double sum = 0;
+	        for (double value : values) {
+	            sum += value;
+	        }
+	        return sum / values.length;
+	    }
+
+	    public static double calculateStandardDeviation(double[] values, double mean) {
+	        double sumSquaredDifferences = 0;
+	        for (double value : values) {
+	            double difference = value - mean;
+	            sumSquaredDifferences += difference * difference;
+	        }
+	        double meanSquaredDifferences = sumSquaredDifferences / values.length;
+	        return Math.sqrt(meanSquaredDifferences);
+
+	}
+
+}
